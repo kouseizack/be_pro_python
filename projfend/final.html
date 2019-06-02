@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>My smart meter</title>
+	</head>
+
+	<body>
+		<h1> My appliance meter </h1>
+		
+		<img src="https://i.kinja-img.com/gawker-media/image/upload/s--8QTB8BSU--/c_scale,fl_progressive,q_80,w_800/ynclxch3hp6svpu2sv1z.jpg"><br>
+		
+		<button>CLICK ME FIRST</button>
+		<input type="button" value="Generate a table." onclick="generate_table()">
+		<script src = "lib/jquery-3.3.1.min.js" type = "text/javascript"></script>
+		<script type="text/javascript">
+			var usedata = undefined;
+			function generate_table()
+			{
+				var body = document.getElementsByTagName("body")[0];
+				var tbl = document.createElement("table");
+				var tblbody = document.createElement("tbody");
+				for(var i = 0;i<1;i++)
+				{
+					var row = document.createElement("tr");
+					for(var j = 0;j<2;j++)
+					{
+						var cell = document.createElement("td");
+						if(j%2 == 0)
+						{
+							var celltext = document.createTextNode(usedata.dict[i].app_id);
+						}
+						else
+						{
+							var celltext = document.createTextNode(usedata.dict[i].consumption);
+						}
+						cell.appendChild(celltext);
+						row.appendChild(cell);
+					}
+					tblbody.appendChild(row);
+				}
+				tbl.appendChild(tblbody);
+				body.appendChild(tbl);
+				tbl.setAttribute("border","2");
+			}
+				$("button").click(function() {
+					alert("yo");
+					(function() {
+  					var flickerAPI = "http://localhost:3000/";
+  					$.getJSON( flickerAPI )
+    					.done(function( data ) {
+    						 usedata = data;
+     						 $.each( data.dict, function( i, ans ) {
+       						 console.log( "JSON Data: " + ans.consumption)
+     				 });
+    			});
+				})();
+				});
+
+		</script>
+		
+		<a href="http://localhost:3000/">doit</a>
+	</body>
+
+</html>
